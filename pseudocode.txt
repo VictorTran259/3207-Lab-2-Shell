@@ -1,0 +1,94 @@
+***FUNCTIONS NOT FINAL. THESE ARE JUST IDEAS. I MIGHT ADD FUNCTIONS LATER IF I NEED OTHER FUNCTIONS***
+built ins
+
+exit() {
+    just use exit() to exit the shell program. probably also print statement that will print out something like "exiting shell".
+}
+
+help() {
+    Open the file and read its contents to the screen line by line.
+    this will probably be done using the open function to open "help.txt and the getline function
+    to retrieve each line. i'll probably have a buffer to hold the current line of getline and then
+    i'll print it out to the shell for the user to see.
+
+    Will probably use the help of the redirection function if the user wants to redirect the contents
+    of the help.txt file into another file.
+}
+
+pwd() {
+    use getcwd() to get the name of the current working directory and store the name
+    into a char array.
+
+    print out that result from getcwd() to the shell so the user can see.
+}
+
+cd() {
+    use chdir() to change the current working directory.
+    the new current working directory will be passed to the function.
+
+    will probably have an if statement that will check to see if the current working directory the user entered
+    is valid or not and print out an error message if it's not.
+}
+
+wait() {
+    use waitpid() to make the shell wait until the process is finished executing.
+
+    to cover the & case where the shell will not wait until the process finishes executing,
+    i will probably have something in the function to check if & is in the arguments
+    or i will check for the & argument somewhere before calling the function like in the shell
+    program itself possibly.
+}
+
+redirection() {
+    for >, create a new file and put the contents of the old file in it.
+    open function with the flags to write and create it if it doesn't exist.
+
+    for <, open up the file and then send it to standard input.
+    open function with the read only flag and then it will read it out to the standard input.
+
+    this function will probably have two if statements that will use strcmp to check for ">" and "<"
+}
+
+piping() {
+    ***From the recommendation for implementing piping section of the project instructions***
+    i'm most likely just going to follow these recommendations for implementing piping into my shell.
+
+    Create an array of n - 1 pipes in the shell process. Let’s call this array pipe_arr.
+
+    Use a for loop to fork() the n child processes.
+
+    For every index i (aside from the first and last, which are edge cases), process i changes its stdin FD (0) to point to the read
+    end of pipe_arr[i - 1] and changes its stdout FD (1) to point to the write end of pipe_arr[i]. The dup2 syscall will prove to be useful here.
+    The idea here is that for every index i (other than the edge cases), process i is responsible for writing to the ith pipe in pipe_arr.
+    Because every process does this, process i can read from the read end of pipe_arr[i - 1] to get data that’s being written by process i - 1.
+
+    After changing its stdin and stdout, process i must close all of its pipe FDs. If these FDs are not closed,
+    the process will hang for the reasons provided in the previous section. After closing all of these pipe FDs,
+    the process will still have access to a single read-end FD and a single write-end FD for the appropriate pipes due to using dup2.
+
+    The shell process also needs to close all of the pipe FDs since it doesn’t make use of them at all (remember, the pipes are used exclusively by the child processes).
+    I'll just use the close() function to close all the pipes.
+}
+
+exec() {
+    use fork() so the program to be executed can be run concurrently while the shell is running
+    and then use execv() to execute the program
+
+    will probably have an if statement to check if the fork was successful or not just in case.
+
+    Will probably use the piping and redirection functions to take care of any piping and redirection necessary
+    in this function.
+}
+
+The shell itself
+main() {
+    This while loop will go on forever unless the exit function is called by the user which emulates how an actual shell works
+    while(1) {
+        In this while loop, I'll have some code that will fetch the command line arguments the user entered
+        and some code that will process the command line arguments in order to determine which functions/commands to
+        exxecute or I'll have another function that the shell can call that will do this.
+        
+        The shell will probably also print out the current working directory every time it's ready to execute a new command
+        just like the linux server shell does.
+    }
+}

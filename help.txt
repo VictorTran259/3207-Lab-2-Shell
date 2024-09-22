@@ -1,0 +1,24 @@
+BUILT-IN COMMANDS
+exit: exits the user from the shell. takes in no arguments. format: "exit".
+help: prints out the shell's manual takes in no arguments. format: "help".
+pwd: prints out the current working directory. takes in no arguments. format: "pwd".
+cd: change the current working directory to a new one specified by the user. you can enter a full path (/dir/dir) or if the directory is in your cwd, just enter
+the name of the directory. takes in one argument which is the directory to change the current working directory to. format: "cd directory_name".
+wait: you can't directly call this command. it's used by the execution functions when you try to execute something in the shell. if you put an & symbol at the
+end of a command, the shell will not wait for the process to finish executing before letting you enter another command.
+
+EXECUTING A COMMAND
+You can execute a program in this shell in three ways:
+"./program" - it's one of your programs you compiled with gcc
+"program" - this works for things such as ls or dir
+"/path/program" - if you know the path to a program, you can also execute it like this. ex: /bin/ls
+
+REDIRECTION
+You can redirect the Standard Output of a program to a file if you don't want the output the be printed out like this: "program > file". ex: "ls > file"
+You can redirect the Standard Input of a program like this: "program < file". ex: "wc < file".
+You can't have multiple of the same redirection in a row (command > file1 > file2 or command < file1 < file2) in the same command.
+You can have something like this though: "command < file1 > file2".
+
+PIPING
+This shell only supports commands with one pipe. If you want to use the output of one command to execute another command like "ls | wc" for example, 
+you can type in a command like this: "command1 | command2".
