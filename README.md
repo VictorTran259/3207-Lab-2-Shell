@@ -1,4 +1,4 @@
-# CIS-3207-Lab-2
+# CIS 3207 Lab 2 - Shell
 ## Project files
 
       builtins.c
